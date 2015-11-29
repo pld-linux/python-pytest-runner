@@ -20,7 +20,7 @@ Source0:	https://pypi.python.org/packages/source/p/pytest-runner/pytest-runner-%
 # Source0-md5:	2eef117c2f9db55d6639f5ef733575a6
 URL:		https://bitbucket.org/pytest-dev/pytest-runner
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.616
+BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.6
 BuildRequires:	python-setuptools
