@@ -11,26 +11,28 @@
 Summary:	Invoke py.test as distutils command with dependency resolution
 Summary(pl.UTF-8):	Wywoływanie py.test jako polecenia distutils z rozwiązywaniem zależności
 Name:		python-pytest-runner
-Version:	2.5.1
-Release:	3
+Version:	2.7
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/pypi/pytest-runner
-Source0:	https://pypi.python.org/packages/source/p/pytest-runner/pytest-runner-%{version}.zip
-# Source0-md5:	2eef117c2f9db55d6639f5ef733575a6
+Source0:	https://pypi.python.org/packages/source/p/pytest-runner/pytest-runner-%{version}.tar.gz
+# Source0-md5:	360a09bb80b505a7a093c20aeb4d1994
 URL:		https://bitbucket.org/pytest-dev/pytest-runner
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.6
+%{?with_tests:BuildRequires:	python-pytest >= 2.8}
 BuildRequires:	python-setuptools
-BuildRequires:	python-setuptools_scm
+BuildRequires:	python-setuptools_scm >= 1.9
 %{?with_doc:BuildRequires:	sphinx-pdg}
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.2
+%{?with_tests:BuildRequires:	python3-pytest >= 2.8}
 BuildRequires:	python3-setuptools
-BuildRequires:	python3-setuptools_scm
+BuildRequires:	python3-setuptools_scm >= 1.9
 %endif
 Requires:	python-modules
 BuildArch:	noarch
@@ -104,7 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.txt README.txt
+%doc CHANGES.rst README.rst
 %{py_sitescriptdir}/ptr.py[co]
 %{py_sitescriptdir}/pytest_runner-%{version}-py*.egg-info
 %endif
@@ -112,7 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-pytest-runner
 %defattr(644,root,root,755)
-%doc CHANGES.txt README.txt
+%doc CHANGES.rst README.rst
 %{py3_sitescriptdir}/ptr.py
 %{py3_sitescriptdir}/__pycache__/ptr.cpython-*.py[co]
 %{py3_sitescriptdir}/pytest_runner-%{version}-py*.egg-info
