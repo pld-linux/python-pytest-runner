@@ -11,13 +11,13 @@
 Summary:	Invoke py.test as distutils command with dependency resolution
 Summary(pl.UTF-8):	Wywoływanie py.test jako polecenia distutils z rozwiązywaniem zależności
 Name:		python-pytest-runner
-Version:	2.7
+Version:	2.7.1
 Release:	1
 License:	MIT
 Group:		Libraries/Python
-#Source0Download: https://pypi.python.org/pypi/pytest-runner
+#Source0Download: https://pypi.python.org/simple/pytest-runner
 Source0:	https://pypi.python.org/packages/source/p/pytest-runner/pytest-runner-%{version}.tar.gz
-# Source0-md5:	360a09bb80b505a7a093c20aeb4d1994
+# Source0-md5:	e56f0bc8d79a6bd91772b44ef4215c7e
 URL:		https://bitbucket.org/pytest-dev/pytest-runner
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.710
