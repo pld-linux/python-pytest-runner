@@ -22,11 +22,12 @@ URL:		https://bitbucket.org/pytest-dev/pytest-runner
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
+%{?with_doc:BuildRequires:	python-Sphinx}
 BuildRequires:	python-modules >= 1:2.6
 %{?with_tests:BuildRequires:	python-pytest >= 2.8}
+%{?with_doc:BuildRequires:	python-rst.linker}
 BuildRequires:	python-setuptools
 BuildRequires:	python-setuptools_scm >= 1.9
-%{?with_doc:BuildRequires:	sphinx-pdg}
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.2
