@@ -11,31 +11,31 @@
 Summary:	Invoke py.test as distutils command with dependency resolution
 Summary(pl.UTF-8):	Wywoływanie py.test jako polecenia distutils z rozwiązywaniem zależności
 Name:		python-pytest-runner
-Version:	2.7.1
-Release:	2
+Version:	2.11.1
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/pytest-runner
-Source0:	https://pypi.python.org/packages/source/p/pytest-runner/pytest-runner-%{version}.tar.gz
-# Source0-md5:	e56f0bc8d79a6bd91772b44ef4215c7e
-URL:		https://bitbucket.org/pytest-dev/pytest-runner
-BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.710
+Source0:	https://files.pythonhosted.org/packages/source/p/pytest-runner/pytest-runner-%{version}.tar.gz
+# Source0-md5:	bdb73eb18eca2727944a2dcf963c5a81
+URL:		https://github.com/pytest-dev/pytest-runner
 %if %{with python2}
 %{?with_doc:BuildRequires:	python-Sphinx}
 BuildRequires:	python-modules >= 1:2.6
 %{?with_tests:BuildRequires:	python-pytest >= 2.8}
 %{?with_doc:BuildRequires:	python-rst.linker}
 BuildRequires:	python-setuptools
-BuildRequires:	python-setuptools_scm >= 1.9
+BuildRequires:	python-setuptools_scm >= 1.15.0
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.2
 %{?with_tests:BuildRequires:	python3-pytest >= 2.8}
 BuildRequires:	python3-setuptools
-BuildRequires:	python3-setuptools_scm >= 1.9
+BuildRequires:	python3-setuptools_scm >= 1.15.0
 %endif
-Requires:	python-modules
+BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.714
+Requires:	python-modules >= 1:2.6
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -51,7 +51,7 @@ obsługi testów pytest runnera w setup.py.
 Summary:	Invoke py.test as distutils command with dependency resolution
 Summary(pl.UTF-8):	Wywoływanie py.test jako polecenia distutils z rozwiązywaniem zależności
 Group:		Libraries/Python
-Requires:	python3-modules
+Requires:	python3-modules >= 1:3.2
 
 %description -n python3-pytest-runner
 Setup scripts can use pytest-runner to add setup.py test support for
@@ -77,7 +77,9 @@ Dokumentacja modułu pytest-runner.
 
 %build
 %if %{with python2}
-%py_build %{?with_tests:test}
+%py_build
+
+%{?with_tests:%{__python} -m pytest}
 
 %if %{with doc}
 %{__python} setup.py build_sphinx
@@ -85,7 +87,9 @@ Dokumentacja modułu pytest-runner.
 %endif
 
 %if %{with python3}
-%py3_build %{?with_tests:test}
+%py3_build
+
+%{?with_tests:%{__python3} -m pytest}
 %endif
 
 %install
