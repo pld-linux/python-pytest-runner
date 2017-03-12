@@ -23,7 +23,7 @@ URL:		https://github.com/pytest-dev/pytest-runner
 %{?with_doc:BuildRequires:	python-Sphinx}
 BuildRequires:	python-modules >= 1:2.6
 %{?with_tests:BuildRequires:	python-pytest >= 2.8}
-%{?with_doc:BuildRequires:	python-rst.linker}
+%{?with_doc:BuildRequires:	python-rst.linker >= 1.8}
 BuildRequires:	python-setuptools
 BuildRequires:	python-setuptools_scm >= 1.15.0
 %endif
