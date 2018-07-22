@@ -11,31 +11,40 @@
 Summary:	Invoke py.test as distutils command with dependency resolution
 Summary(pl.UTF-8):	Wywoływanie py.test jako polecenia distutils z rozwiązywaniem zależności
 Name:		python-pytest-runner
-Version:	2.11.1
-Release:	2
+Version:	4.2
+Release:	1
 License:	MIT
 Group:		Libraries/Python
-#Source0Download: https://pypi.python.org/simple/pytest-runner
+#Source0Download: https://pypi.org/simple/pytest-runner/
 Source0:	https://files.pythonhosted.org/packages/source/p/pytest-runner/pytest-runner-%{version}.tar.gz
-# Source0-md5:	bdb73eb18eca2727944a2dcf963c5a81
+# Source0-md5:	4b696b0f35767f0694f183d0a1855300
 URL:		https://github.com/pytest-dev/pytest-runner
 %if %{with python2}
-%{?with_doc:BuildRequires:	python-Sphinx}
-BuildRequires:	python-modules >= 1:2.6
-%{?with_tests:BuildRequires:	python-pytest >= 2.8}
-%{?with_doc:BuildRequires:	python-rst.linker >= 1.8}
+BuildRequires:	python-modules >= 1:2.7
 BuildRequires:	python-setuptools
 BuildRequires:	python-setuptools_scm >= 1.15.0
+%if %{with tests}
+BuildRequires:	python-pytest >= 2.8
+BuildRequires:	python-pytest-flake8
+%endif
+%if %{with doc}
+BuildRequires:	python-Sphinx
+BuildRequires:	python-jaraco.packaging >= 3.2
+BuildRequires:	python-rst.linker >= 1.9
+%endif
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.2
-%{?with_tests:BuildRequires:	python3-pytest >= 2.8}
 BuildRequires:	python3-setuptools
 BuildRequires:	python3-setuptools_scm >= 1.15.0
+%if %{with tests}
+BuildRequires:	python3-pytest >= 2.8
+BuildRequires:	python3-pytest-flake8
+%endif
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
-Requires:	python-modules >= 1:2.6
+Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -111,7 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.rst README.rst
+%doc CHANGES.rst LICENSE README.rst
 %{py_sitescriptdir}/ptr.py[co]
 %{py_sitescriptdir}/pytest_runner-%{version}-py*.egg-info
 %endif
@@ -119,7 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-pytest-runner
 %defattr(644,root,root,755)
-%doc CHANGES.rst README.rst
+%doc CHANGES.rst LICENSE README.rst
 %{py3_sitescriptdir}/ptr.py
 %{py3_sitescriptdir}/__pycache__/ptr.cpython-*.py[co]
 %{py3_sitescriptdir}/pytest_runner-%{version}-py*.egg-info
