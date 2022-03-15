@@ -1,46 +1,50 @@
 #
 # Conditional build:
-%bcond_without	doc	# documentation (uses python2)
-%bcond_with	tests	# perform "make test" (broken with \--build-base)
+%bcond_without	doc	# Sphinx documentation
+%bcond_with	tests	# unit tests
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
 
-%if %{without python2}
-%undefine	with_doc
-%endif
 Summary:	Invoke py.test as distutils command with dependency resolution
 Summary(pl.UTF-8):	Wywoływanie py.test jako polecenia distutils z rozwiązywaniem zależności
 Name:		python-pytest-runner
-Version:	4.2
-Release:	5
+# keep 5.2.x here for python2 support
+Version:	5.2
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pytest-runner/
 Source0:	https://files.pythonhosted.org/packages/source/p/pytest-runner/pytest-runner-%{version}.tar.gz
-# Source0-md5:	4b696b0f35767f0694f183d0a1855300
+# Source0-md5:	e5f66b8e8e87f62c59631c35c919d321
 URL:		https://github.com/pytest-dev/pytest-runner
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.7
-BuildRequires:	python-setuptools
+BuildRequires:	python-setuptools >= 1:31.0.1
 BuildRequires:	python-setuptools_scm >= 1.15.0
 %if %{with tests}
-BuildRequires:	python-pytest >= 2.8
+BuildRequires:	python-pytest >= 3.5
+BuildRequires:	python-pytest-black-multipy
+BuildRequires:	python-pytest-cov
 BuildRequires:	python-pytest-flake8
-%endif
-%if %{with doc}
-BuildRequires:	python-Sphinx
-BuildRequires:	python-jaraco.packaging >= 3.2
-BuildRequires:	python-rst.linker >= 1.9
+BuildRequires:	python-pytest-virtualenv
 %endif
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.2
-BuildRequires:	python3-setuptools
+BuildRequires:	python3-setuptools >= 1:31.0.1
 BuildRequires:	python3-setuptools_scm >= 1.15.0
 %if %{with tests}
-BuildRequires:	python3-pytest >= 2.8
+BuildRequires:	python3-pytest >= 3.5
+BuildRequires:	python3-pytest-black-multipy
+BuildRequires:	python3-pytest-cov
 BuildRequires:	python3-pytest-flake8
+BuildRequires:	python3-pytest-virtualenv
 %endif
+%endif
+%if %{with doc}
+BuildRequires:	python-jaraco.packaging >= 3.2
+BuildRequires:	python-rst.linker >= 1.9
+BuildRequires:	sphinx-pdg-2
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -88,17 +92,25 @@ Dokumentacja modułu pytest-runner.
 %if %{with python2}
 %py_build
 
-%{?with_tests:%{__python} -m pytest}
-
-%if %{with doc}
-%{__python} setup.py build_sphinx
+%if %{with tests}
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+PYTEST_PLUGINS=pytest_black_multipy,pytest_cov.plugin,pytest_flake8,pytest_virtualenv \
+%{__python} -m pytest ptr.py tests
 %endif
 %endif
 
 %if %{with python3}
 %py3_build
 
-%{?with_tests:%{__python3} -m pytest}
+%if %{with tests}
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+PYTEST_PLUGINS=pytest_black_multipy,pytest_cov.plugin,pytest_flake8,pytest_virtualenv \
+%{__python3} -m pytest ptr.py tests
+%endif
+%endif
+
+%if %{with doc}
+sphinx-build-2 -b html docs docs/build/html
 %endif
 
 %install
@@ -137,5 +149,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files apidocs
 %defattr(644,root,root,755)
-%doc build/sphinx/html/{_static,*.html,*.js}
+%doc docs/build/html/{_static,*.html,*.js}
 %endif
