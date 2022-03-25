@@ -10,7 +10,7 @@ Summary(pl.UTF-8):	Wywoływanie py.test jako polecenia distutils z rozwiązywani
 Name:		python-pytest-runner
 # keep 5.2.x here for python2 support
 Version:	5.2
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pytest-runner/
