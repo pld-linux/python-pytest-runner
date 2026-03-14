@@ -1,16 +1,16 @@
 #
 # Conditional build:
 %bcond_without	doc	# Sphinx documentation
-%bcond_with	tests	# unit tests
+%bcond_with	tests	# unit tests (require network)
 %bcond_without	python2 # CPython 2.x module
-%bcond_without	python3 # CPython 3.x module
+%bcond_with	python3 # CPython 3.x module (built from python3-pytest-runner.spec)
 
 Summary:	Invoke py.test as distutils command with dependency resolution
 Summary(pl.UTF-8):	Wywoływanie py.test jako polecenia distutils z rozwiązywaniem zależności
 Name:		python-pytest-runner
 # keep 5.2.x here for python2 support
 Version:	5.2
-Release:	5
+Release:	6
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pytest-runner/
